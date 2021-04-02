@@ -28,3 +28,17 @@ instancias/MDG-a_6_n500_m50.txt filter=lfs diff=lfs merge=lfs -text
 instancias/MDG-b_22_n2000_m200.txt filter=lfs diff=lfs merge=lfs -text
 instancias/MDG-b_30_n2000_m200.txt filter=lfs diff=lfs merge=lfs -text
 instancias/MDG-a_4_n500_m50.txt filter=lfs diff=lfs merge=lfs -text
+instancias/*.txt filter=lfs diff=lfs merge=lfs -text
+instancias/MDG-a_06_n500_m50.txt filter=lfs diff=lfs merge=lfs -text
+instancias/MDG-c_01_n3000_m300.txt filter=lfs diff=lfs merge=lfs -text
+instancias/MDG-c_08_n3000_m400.txt filter=lfs diff=lfs merge=lfs -text
+instancias/MDG-a_09_n500_m50.txt filter=lfs diff=lfs merge=lfs -text
+instancias/MDG-a_01_n500_m50.txt filter=lfs diff=lfs merge=lfs -text
+instancias/MDG-a_02_n500_m50.txt filter=lfs diff=lfs merge=lfs -text
+instancias/MDG-a_03_n500_m50.txt filter=lfs diff=lfs merge=lfs -text
+instancias/MDG-a_04_n500_m50.txt filter=lfs diff=lfs merge=lfs -text
+instancias/MDG-a_05_n500_m50.txt filter=lfs diff=lfs merge=lfs -text
+instancias/MDG-a_07_n500_m50.txt filter=lfs diff=lfs merge=lfs -text
+instancias/MDG-a_08_n500_m50.txt filter=lfs diff=lfs merge=lfs -text
+instancias/MDG-c_02_n3000_m300.txt filter=lfs diff=lfs merge=lfs -text
+instancias/MDG-c_09_n3000_m400.txt filter=lfs diff=lfs merge=lfs -text
