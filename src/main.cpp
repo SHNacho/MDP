@@ -1,13 +1,25 @@
 #include <iostream>
 #include <fstream>
-#include "../Eigen/Dense"
+#include "Eigen/Dense"
 #include <string>
+#include <algorithm>
 #include <set>
 #include	<chrono>
+#include	"greedy.h"
+#include "bl.h"
+#include "random.h"
 
 using namespace std;
 
+//#define GREEDY
+//#define GREEDY_V2
+#define LOCAL_SEARCH
 
+const string ARCHIVO_SEMILLA = "./semilla.txt";
+
+/**
+ * Lee un archivo de datos y lo pasa a una matriz de distancias
+ */
 int leerArchivo (string nombreArchivo, Eigen::MatrixXf & distancias)
 {
 	int num_distancias,
@@ -42,6 +54,29 @@ int leerArchivo (string nombreArchivo, Eigen::MatrixXf & distancias)
 	return tam_solucion;
 }
 
+/**
+ * Lee la semilla de inicialización para Random del archivo semilla.txt
+ */
+unsigned long leerSemilla()
+{
+	unsigned long semilla;
+	
+	ifstream ifs;
+
+	ifs.open(ARCHIVO_SEMILLA);
+
+	if(ifs.is_open()){
+		ifs >> semilla;
+	}
+
+	ifs.close();
+
+	return semilla;
+}
+
+/**
+ * Calcula la diversidad de la solucion
+ */
 double diversidad(set<int> & v_sol, Eigen::MatrixXf & m_distancias){
 	double diversidad = 0.0;
 
@@ -61,58 +96,8 @@ double diversidad(set<int> & v_sol, Eigen::MatrixXf & m_distancias){
 	return diversidad;
 }
 
-int primerElemento_Greedy(Eigen::MatrixXf & m_distancias)
-{
-	double mayor_diversidad = 0.0;
-	int mas_diverso = 0;
-
-	for(int i=0; i<m_distancias.rows(); ++i){
-
-		double diversidad_i = 0;
-
-		for(int j=0; j<m_distancias.cols(); ++j){
-			diversidad_i += m_distancias(i, j);
-		}
-
-		if(diversidad_i > mayor_diversidad){
-			mayor_diversidad = diversidad_i;
-			mas_diverso = i;
-		}
-	}
-
-	return mas_diverso;
-}
-
-// Calculamos el siguiente elemento a introducir en el vector solución
-int elementoMasDiverso_Greedy(Eigen::MatrixXf & m_distancias, set<int> & v_sol){
-	double mayor_diversidad = 0.0;
-	int mas_diverso = 0;
-
-	// Dentro de todos los elementos que no se encuentran en la solución
-	// buscamos el que maximice la mínima distancia a uno de los elementos de la solución
-	for(int i=0; i<m_distancias.rows(); ++i){
-
-		if(v_sol.find(i) == v_sol.end()){ //Si no está ya en la solución comprobamos
-			
-			set<int>::iterator it = v_sol.begin();
-			
-			double distancia_i_sel = m_distancias(i, *it);
-			it++;
-
-			for(it; it != v_sol.end(); it++){
-				if(m_distancias(i, *it) < distancia_i_sel)
-					distancia_i_sel = m_distancias(i, *it);
-			}
-
-			if(distancia_i_sel > mayor_diversidad){
-				mayor_diversidad = distancia_i_sel;
-				mas_diverso = i;
-			}
-		}
-
-	}
-
-	return mas_diverso;
+bool compare_elements(ElementoConCoste & a, ElementoConCoste & b){
+	return a.diversidad < b.diversidad;
 }
 
 /**
@@ -121,46 +106,57 @@ int elementoMasDiverso_Greedy(Eigen::MatrixXf & m_distancias, set<int> & v_sol){
 int main(int argc, char *argv[]){
 
 	cout.setf(ios::fixed);
-	int tam_solucion,
-	    tam_matriz,
-		 tam_actual_sol = 0;
 
-	Eigen::MatrixXf distancias;
+	int tam_solucion;
+	Eigen::MatrixXf m_diversidad;
+
+	//Leer el archivo de datos
+	tam_solucion = leerArchivo(argv[1], m_diversidad);
+	
+	//Establecer la semilla
+	Set_random(leerSemilla());
+
+#ifdef GREEDY 
 	set<int> solucion;
 
-	tam_solucion = leerArchivo(argv[1], distancias);
-
 	auto start = std::chrono::system_clock::now();
-	solucion.insert(primerElemento_Greedy(distancias));
-	
-	while(solucion.size() < tam_solucion){
-		int introducido = elementoMasDiverso_Greedy(distancias, solucion);
-		solucion.insert(introducido);
-	}
-
+	MDPGreedy(m_diversidad, tam_solucion, solucion);
 	auto end = std::chrono::system_clock::now();
 	chrono::duration<double, milli> duration = end - start;
 	
-	set<int>::iterator it;
+	
+	cout << diversidad(solucion, m_diversidad) << ", " << duration.count() << endl;
+#endif //GREEDY
 
-	//Muestra los elementos de la solución
-	unsigned int suma = 0;
-	for(it=solucion.begin(); it!=solucion.end(); it++){
-		//suma += *it;
-		//cout << *it << endl;
+#ifdef GREEDY_V2 
+	set<int> solucion;
+
+	auto start = std::chrono::system_clock::now();
+	MDPGreedyV2(m_diversidad, tam_solucion, solucion);
+	auto end = std::chrono::system_clock::now();
+	chrono::duration<double, milli> duration = end - start;
+	
+	
+	cout << diversidad(solucion, m_diversidad) << ", " << duration.count() << endl;
+#endif //GREEDY
+
+
+#ifdef LOCAL_SEARCH
+	vector<ElementoConCoste> solucion;
+	set<int> set_solucion;
+
+	auto start = std::chrono::system_clock::now();
+	solucion = BusquedaLocal(m_diversidad, tam_solucion);
+	auto end = std::chrono::system_clock::now();
+	chrono::duration<double, milli> duration = end - start;
+
+	for(vector<ElementoConCoste>::iterator it = solucion.begin(); it != solucion.end(); it++){
+		set_solucion.insert(it->posicion);
 	}
 
-	//cout << "Suma: " << suma << endl;
+	cout << diversidad(set_solucion, m_diversidad) << ", " << duration.count() << endl;
 
-	//cout << "Diversidad de la solución: " << diversidad(solucion, distancias) << endl;
-	//cout << "Tiempo de cálculo: " << duration.count() << " millisec" << endl;
-	
-	cout << diversidad(solucion, distancias) << ", " << duration.count() << endl;
-
-	
-
-
-	
+#endif //LOCAL_SEARCH
 
 	return 0;
 }

@@ -1,0 +1,54 @@
+[
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-I./include",
+      "-c",
+      "src/main.cpp",
+      "-o",
+      "obj/main.o"
+    ],
+    "directory": "/home/nacho/Universidad/Metaheurística",
+    "file": "/home/nacho/Universidad/Metaheurística/src/main.cpp",
+    "output": "/home/nacho/Universidad/Metaheurística/obj/main.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-I./include",
+      "-c",
+      "src/greedy.cpp",
+      "-o",
+      "obj/greedy.o"
+    ],
+    "directory": "/home/nacho/Universidad/Metaheurística",
+    "file": "/home/nacho/Universidad/Metaheurística/src/greedy.cpp",
+    "output": "/home/nacho/Universidad/Metaheurística/obj/greedy.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-I./include",
+      "-c",
+      "src/bl.cpp",
+      "-o",
+      "obj/bl.o"
+    ],
+    "directory": "/home/nacho/Universidad/Metaheurística",
+    "file": "/home/nacho/Universidad/Metaheurística/src/bl.cpp",
+    "output": "/home/nacho/Universidad/Metaheurística/obj/bl.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/g++",
+      "-I./include",
+      "-c",
+      "src/random.cpp",
+      "-o",
+      "obj/random.o"
+    ],
+    "directory": "/home/nacho/Universidad/Metaheurística",
+    "file": "/home/nacho/Universidad/Metaheurística/src/random.cpp",
+    "output": "/home/nacho/Universidad/Metaheurística/obj/random.o"
+  }
+]
