@@ -1,16 +1,16 @@
 #include	"greedy.h"
 
-int primerElemento(Eigen::MatrixXf & m_diversidad)
+int primerElemento()
 {
 	double mayor_diversidad = 0.0;
 	int mas_diverso = 0;
 
-	for(int i=0; i<m_diversidad.rows(); ++i){
+	for(int i=0; i<M_DIVERSIDAD.rows(); ++i){
 
 		double diversidad_i = 0;
 
-		for(int j=0; j<m_diversidad.cols(); ++j){
-			diversidad_i += m_diversidad(i, j);
+		for(int j=0; j<M_DIVERSIDAD.cols(); ++j){
+			diversidad_i += M_DIVERSIDAD(i, j);
 		}
 
 		if(diversidad_i > mayor_diversidad){
@@ -24,24 +24,24 @@ int primerElemento(Eigen::MatrixXf & m_diversidad)
 
 /************************************************************************/
 
-int siguienteElemento(Eigen::MatrixXf & m_distancias, set<int> & v_sol){
+int siguienteElemento(set<int> & v_sol){
 	double mayor_diversidad = 0.0;
 	int mas_diverso = 0;
 
 	// Dentro de todos los elementos que no se encuentran en la solución
 	// buscamos el que maximice la mínima distancia a uno de los elementos de la solución
-	for(int i=0; i<m_distancias.rows(); ++i){
+	for(int i=0; i<M_DIVERSIDAD.rows(); ++i){
 
 		if(v_sol.find(i) == v_sol.end()){ //Si no está ya en la solución comprobamos
 			
 			set<int>::iterator it = v_sol.begin();
 			
-			double distancia_i_sol = m_distancias(i, *it);
+			double distancia_i_sol = M_DIVERSIDAD(i, *it);
 			it++;
 
 			for(it; it != v_sol.end(); it++){
-				if(m_distancias(i, *it) < distancia_i_sol)
-					distancia_i_sol = m_distancias(i, *it);
+				if(M_DIVERSIDAD(i, *it) < distancia_i_sol)
+					distancia_i_sol = M_DIVERSIDAD(i, *it);
 			}
 
 			if(distancia_i_sol > mayor_diversidad){
@@ -57,13 +57,13 @@ int siguienteElemento(Eigen::MatrixXf & m_distancias, set<int> & v_sol){
 
 /************************************************************************/
 
-int siguienteElementoV2(Eigen::MatrixXf & m_distancias, set<int> & v_sol){
+int siguienteElementoV2(set<int> & v_sol){
 	double mayor_diversidad = 0.0;
 	int mas_diverso = 0;
 
 	// Dentro de todos los elementos que no se encuentran en la solución
 	// buscamos el que maximice la mínima distancia a uno de los elementos de la solución
-	for(int i=0; i<m_distancias.rows(); ++i){
+	for(int i=0; i<M_DIVERSIDAD.rows(); ++i){
 
 		if(v_sol.find(i) == v_sol.end()){ //Si no está ya en la solución comprobamos
 			
@@ -71,7 +71,7 @@ int siguienteElementoV2(Eigen::MatrixXf & m_distancias, set<int> & v_sol){
 			set<int>::iterator it;
 
 			for(it = v_sol.begin(); it != v_sol.end(); it++){
-				distancia_i_sol += m_distancias(i, *it);
+				distancia_i_sol += M_DIVERSIDAD(i, *it);
 			}
 
 			if(distancia_i_sol > mayor_diversidad){
@@ -88,11 +88,11 @@ int siguienteElementoV2(Eigen::MatrixXf & m_distancias, set<int> & v_sol){
 
 /************************************************************************/
 
-set<int> MDPGreedy(Eigen::MatrixXf & m_diversidad, int tam_solucion, set<int> & solucion){
-	solucion.insert(primerElemento(m_diversidad));
+set<int> MDPGreedy(int tam_solucion, set<int> & solucion){
+	solucion.insert(primerElemento());
 	
 	while(solucion.size() < tam_solucion){
-		int introducido = siguienteElemento(m_diversidad, solucion);
+		int introducido = siguienteElemento(solucion);
 		solucion.insert(introducido);
 	}
 
@@ -101,11 +101,11 @@ set<int> MDPGreedy(Eigen::MatrixXf & m_diversidad, int tam_solucion, set<int> & 
 
 /************************************************************************/
 
-set<int> MDPGreedyV2(Eigen::MatrixXf & m_diversidad, int tam_solucion, set<int> & solucion){
-	solucion.insert(primerElemento(m_diversidad));
+set<int> MDPGreedyV2(int tam_solucion, set<int> & solucion){
+	solucion.insert(primerElemento());
 	
 	while(solucion.size() < tam_solucion){
-		int introducido = siguienteElementoV2(m_diversidad, solucion);
+		int introducido = siguienteElementoV2(solucion);
 		solucion.insert(introducido);
 	}
 

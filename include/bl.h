@@ -12,11 +12,11 @@ using namespace std;
  * Esta diversidad será la diversidad respecto al resto de elementos
  * de la solción
  */
-struct ElementoConCoste{
+struct ElementoConContribucion{
 	int posicion;
 	double diversidad;
 
-	bool operator>(const ElementoConCoste& otro) const {
+	bool operator>(const ElementoConContribucion& otro) const {
 		if(diversidad == otro.diversidad){
 			return posicion > otro.posicion;
 		}
@@ -24,7 +24,7 @@ struct ElementoConCoste{
 			return diversidad > otro.diversidad;
 	}
 
-	bool operator<(const ElementoConCoste& otro) const {
+	bool operator<(const ElementoConContribucion& otro) const {
 		if(diversidad == otro.diversidad){
 			return posicion < otro.posicion;
 		}
@@ -32,10 +32,10 @@ struct ElementoConCoste{
 			return diversidad < otro.diversidad;
 	}
 
-	bool operator==(const ElementoConCoste& otro) const {return posicion == otro.posicion;}
+	bool operator==(const ElementoConContribucion& otro) const {return posicion == otro.posicion;}
 
 	bool operator==(const int otro) const {return posicion == otro;}
-	ElementoConCoste & operator=(const ElementoConCoste & otro){
+	ElementoConContribucion & operator=(const ElementoConContribucion & otro){
 		this->posicion = otro.posicion;
 		this->diversidad = otro.diversidad;
 		return *this;
@@ -46,21 +46,21 @@ struct ElementoConCoste{
 /**
  * Calcula la solucion inicila aleatoria
  */
-set<int> solucionInicial(Eigen::MatrixXf & m_diversidad, set<int> & solucion_inicial, int tam_solucion);
+set<int> solucionAleatoria(Eigen::MatrixXf & m_diversidad, set<int> & solucion_inicial, int tam_solucion);
 
 /**
  * Factoriza la solición inicial
  */
-vector<ElementoConCoste> factorizarSolucion (Eigen::MatrixXf & m_diversidad, set<int> & solucion_inicial,
-															vector<ElementoConCoste> & solucion_factorizada);
+vector<ElementoConContribucion> factorizarSolucion (Eigen::MatrixXf & m_diversidad, set<int> & solucion_inicial,
+															vector<ElementoConContribucion> & solucion_factorizada);
 
 
-double contribucion(Eigen::MatrixXf & m_diversidad, vector<ElementoConCoste> solucion,
+double contribucion(Eigen::MatrixXf & m_diversidad, vector<ElementoConContribucion> solucion,
 						  int nuevo_elemento, int antiguo_elemento);
 
-void recalcularContribucion(Eigen::MatrixXf & m_diversidad, vector<ElementoConCoste> & solucion,
+void recalcularContribucion(Eigen::MatrixXf & m_diversidad, vector<ElementoConContribucion> & solucion,
 							       int nuevo_elemento, int antiguo_elemento);
 
-vector<ElementoConCoste> BusquedaLocal (Eigen::MatrixXf & m_diversidad, int tam_solucion);
+vector<ElementoConContribucion> BusquedaLocal (int tam_solucion);
 
 #endif

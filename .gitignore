@@ -1,2 +1,4 @@
 bin/*
 *.csv
+memoria/.
+memoria
