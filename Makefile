@@ -9,7 +9,7 @@ all: clean build
 
 build: $(BIN)/main_exe 
 
-$(BIN)/main_exe: $(OBJ)/main.o $(OBJ)/MDP.o $(OBJ)/greedy.o $(OBJ)/bl.o $(OBJ)/random.o 
+$(BIN)/main_exe: $(OBJ)/main.o $(OBJ)/MDP.o $(OBJ)/greedy.o $(OBJ)/bl.o $(OBJ)/genetic.o $(OBJ)/random.o 
 	g++ -std=c++11 -I$(INC) $^ -o $@
 
 $(OBJ)/main.o: $(SRC)/main.cpp $(INC)/MDP.h $(INC)/greedy.h $(INC)/bl.h

@@ -25,11 +25,13 @@ public:
 	//Funciones
 	double calculateFitness();
 	double genContribution(int gen_pos);
-	void evaluationRequired(bool required);
+	void setEvaluationRequired(bool required);
+	bool evaluationRequired();
 	int& getGen(int pos);
+	double getFitness();
 	void repair();
-	Individual& positionCross(Individual &ind);
-	Individual& uniformCross(Individual &ind);
+	Individual positionCross(Individual &ind);
+	Individual uniformCross(Individual &ind);
 	//Sobrecarga de operadores
 	bool operator <(const Individual& ind);
 	Individual& operator=(const Individual& ind);
@@ -42,7 +44,6 @@ public:
 class Population
 {
 private:
-	static double mutation_prob;
 
 	int population_size;
 	vector<Individual> population;
@@ -50,16 +51,19 @@ private:
 public:
 	Population();
 	Population(int _population_size);
-	void add(Individual& ind);
+	void add(Individual ind);
 	Individual binaryTournament();
-	Population& parentsPopulation(int _population_size);
 	void mutation();
+	Individual& bestIndividual();
+	void evaluatePopulation();
 
 	//getters
 	int size();
 
 	//Operators
+	Population& operator=(const Population & pop);
 	Individual& operator[](int pos);
+	friend ostream& operator<<(ostream& os,  Population& ind);
 };
 
 /*********************************************************/
@@ -69,5 +73,6 @@ vector<int>& randomGnome(int gnome_size, int target_size);
 
 
 //Algoritmos genéticos
-void uniformAGG(Population& poblacion);
+Individual uniformAGG();
+Individual positionAGG();
 #endif //GENETIC_H

@@ -16,7 +16,8 @@ using namespace std;
 
 //#define GREEDY
 //#define GREEDY_V2
-#define LOCAL_SEARCH
+//#define LOCAL_SEARCH
+#define GENETIC
 
 const string ARCHIVO_SEMILLA = "./semilla.txt";
 
@@ -118,6 +119,11 @@ int main(int argc, char *argv[]){
 	cout << diversidad(set_solucion) << ", " << duration.count() << endl;
 
 #endif //LOCAL_SEARCH
+
+#ifdef GENETIC
+	Individual ind = positionAGG();	
+	cout << ind << endl;
+#endif
 
 	return 0;
 }
