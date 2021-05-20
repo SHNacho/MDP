@@ -5,3 +5,4 @@ memoria
 *.csv
 *.csv.old
 gmon.out
+compile_commands.json
