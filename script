@@ -2,5 +2,14 @@
 
 for FILE in instancias/*
 do
-	bin/main_exe $FILE
+#	bin/uniformAGG $FILE >> uniformAGG.csv
+	echo "AM_10_1_exe $FILE"
+	date +%H:%M:%S
+	bin/AM_10_1_exe $FILE >> AM_10_1.csv
+	echo "AM_10_0.1_exe $FILE"
+	date +%H:%M:%S
+	bin/AM_10_0.1_exe $FILE >> AM_10_0_1.csv
+	echo "AM_10_0.1mej_exe $FILE"
+	date +%H:%M:%S
+	bin/AM_10_0.1mej_exe $FILE >> AM_10_0_1mej.csv
 done

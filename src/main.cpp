@@ -6,6 +6,7 @@
 #include <set>
 #include	<chrono>
 #include "random.h"
+//#include <omp.h>
 
 #include "MDP.h"
 #include	"greedy.h"
@@ -20,6 +21,7 @@ using namespace std;
 #define GENETIC
 
 const string ARCHIVO_SEMILLA = "./semilla.txt";
+double mutation_prob;
 
 
 
@@ -70,6 +72,7 @@ double diversidad(set<int> & v_sol){
  */
 int main(int argc, char *argv[]){
 
+	//omp_set_num_threads(12);
 	cout.setf(ios::fixed);
 
 	//Leer el archivo de datos
@@ -121,8 +124,19 @@ int main(int argc, char *argv[]){
 #endif //LOCAL_SEARCH
 
 #ifdef GENETIC
-	Individual ind = positionAGG();	
-	cout << ind << endl;
+	mutation_prob = 0.1/(double)M_DIVERSIDAD.rows();
+
+	auto start = std::chrono::system_clock::now();
+	Individual ind = uniformAGGMemetic(10, 1.0, false);	
+	auto end = std::chrono::system_clock::now();
+	chrono::duration<double, milli> duration = end - start;
+	//Individual ind = uniformAGGMemetic(10, 1.0, false);	
+	//Individual ind = positionAGG();	
+	//Individual ind = positionAGE();	
+	//Individual ind = uniformAGE();	
+
+	//string file(argv[1]);
+	cout << ind << ", " << duration.count() << endl;
 #endif
 
 	return 0;

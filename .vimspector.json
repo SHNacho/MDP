@@ -1,0 +1,24 @@
+{
+  "configurations": {
+    "Launch": {
+      "adapter": "vscode-cpptools",
+      "configuration": {
+        "request": "launch",
+        "program": "~/Universidad/Metaheurística/bin/main_exe",
+        "args": [ "./instancias/MDG-a_01_n500_m50.txt" ],
+        "cwd": "/home/nacho/Universidad/Metaheurística/",
+        "environment": [],
+        "externalConsole": true,
+        "MIMode": "gdb"
+      }
+    },
+    "Attach": {
+      "adapter": "vscode-cpptools",
+      "configuration": {
+        "request": "attach",
+        "program": "~/Universidad/Metaheurística/bin/main_exe",
+        "MIMode": "gdb"
+      }
+    }
+  }
+}

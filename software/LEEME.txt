@@ -1,0 +1,14 @@
+Directorios:
+- src: contiene los códigos fuente de random(random.cpp), búsqueda local(busqueda_local.cpp),
+  greedy(greedy.cpp), algoritmos genéticos(genetic.cpp), variables globales(MDP.cpp) y main(main.cpp)
+- include: contiene la cabecera de los archivos .cpp y los archivos de la librería Eigen empleados
+  el uso de matrices.
+- obj: archivos .o para la compilación
+- bin: Los ejecutables
+
+El archivo semilla.txt contiene la semilla que se usará para la funcion random.
+
+Para la compilación del código basta con ejecutar el makefile que viene en el directorio raíz.
+
+La ejecución del programa debe realizarse desde el directorio raíz y se le pasará como
+argumento la ruta de una instancia del problema MDP (P.Ej.: $ bin/uniformAGG_exe instancia/MDG-a_01_n500_m50.txt).

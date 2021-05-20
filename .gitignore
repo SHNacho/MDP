@@ -2,3 +2,6 @@ bin/*
 *.csv
 memoria/.
 memoria
+*.csv
+*.csv.old
+gmon.out
