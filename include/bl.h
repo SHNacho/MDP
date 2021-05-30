@@ -35,6 +35,7 @@ struct ElementoConContribucion{
 	bool operator==(const ElementoConContribucion& otro) const {return posicion == otro.posicion;}
 
 	bool operator==(const int otro) const {return posicion == otro;}
+
 	ElementoConContribucion & operator=(const ElementoConContribucion & otro){
 		this->posicion = otro.posicion;
 		this->diversidad = otro.diversidad;
@@ -57,15 +58,28 @@ vector<ElementoConContribucion> factorizarSolucion (set<int> & solucion_inicial,
 vector<ElementoConContribucion> factorizarSolucion (vector<int> & solucion_inicial,
 																	vector<ElementoConContribucion> & solucion_factorizada);
 
-
+double fitnessFact(vector<ElementoConContribucion>& sol);
+// Calcula la contribución de un elemento nuevo a la solución quitando el elemento por el 
+// que se sustituye de esta.
 double contribucion(vector<ElementoConContribucion> solucion,
 						  int nuevo_elemento, int antiguo_elemento);
 
+// Recalcula el fitness de la solución añadiendo el nuevo elemento y quitando el antiguo
 void recalcularContribucion(vector<ElementoConContribucion> & solucion,
 							       int nuevo_elemento, int antiguo_elemento);
 
 vector<ElementoConContribucion> BusquedaLocal (int tam_solucion);
+vector<ElementoConContribucion> BusquedaLocal (vector<ElementoConContribucion> & sol_ini);
 vector<int> BusquedaLocal (vector<int> sol_inicial);
+
+vector<ElementoConContribucion> SimulatedAnnealing ();
+/************************BMB**********************/
+vector<ElementoConContribucion> BMB();
+
+/************************ILS**********************/
+vector<ElementoConContribucion> mutacionILS(vector<ElementoConContribucion> solucion);
+vector<ElementoConContribucion> ILS();
+
 
 
 #endif
